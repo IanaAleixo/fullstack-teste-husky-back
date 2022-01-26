@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Jan-2022 às 15:45
+-- Tempo de geração: 27-Jan-2022 às 00:37
 -- Versão do servidor: 10.4.19-MariaDB
 -- versão do PHP: 7.3.28
 
@@ -28,9 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `customer` (
-  `cod_costumer` int(11) NOT NULL,
+  `cod_customer` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `customer`
+--
+
+INSERT INTO `customer` (`cod_customer`, `name`) VALUES
+(1, 'João'),
+(2, 'Maria');
 
 -- --------------------------------------------------------
 
@@ -47,6 +55,18 @@ CREATE TABLE `delivery` (
   `destination_point` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `delivery`
+--
+
+INSERT INTO `delivery` (`cod_delivery`, `cod_customer`, `cod_deliveryman`, `status`, `collect_point`, `destination_point`) VALUES
+(2, 1, NULL, 2, 'rua politeama', 'rua tulipa negra'),
+(3, 1, 1, 3, 'rua a', 'rua b'),
+(4, 1, 2, 1, 'rua politeama', 'rua a'),
+(5, 2, 1, 4, 'rua b', 'rua tulipa negra'),
+(6, 2, 3, 1, 'rua tulipa negra', 'rua a'),
+(7, 1, 2, 1, 'rua a', 'rua politeama');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +80,15 @@ CREATE TABLE `deliveryman` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Extraindo dados da tabela `deliveryman`
+--
+
+INSERT INTO `deliveryman` (`cod_deliveryman`, `name`, `status`) VALUES
+(1, 'José', 2),
+(2, 'Joana', 1),
+(3, 'Pedro', 2);
+
+--
 -- Índices para tabelas despejadas
 --
 
@@ -67,7 +96,7 @@ CREATE TABLE `deliveryman` (
 -- Índices para tabela `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`cod_costumer`);
+  ADD PRIMARY KEY (`cod_customer`);
 
 --
 -- Índices para tabela `delivery`
@@ -91,19 +120,19 @@ ALTER TABLE `deliveryman`
 -- AUTO_INCREMENT de tabela `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cod_costumer` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `delivery`
 --
 ALTER TABLE `delivery`
-  MODIFY `cod_delivery` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_delivery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `deliveryman`
 --
 ALTER TABLE `deliveryman`
-  MODIFY `cod_deliveryman` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_deliveryman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restrições para despejos de tabelas
@@ -113,7 +142,7 @@ ALTER TABLE `deliveryman`
 -- Limitadores para a tabela `delivery`
 --
 ALTER TABLE `delivery`
-  ADD CONSTRAINT `fk_customer` FOREIGN KEY (`cod_customer`) REFERENCES `customer` (`cod_costumer`),
+  ADD CONSTRAINT `fk_customer` FOREIGN KEY (`cod_customer`) REFERENCES `customer` (`cod_customer`),
   ADD CONSTRAINT `fk_deliveryman` FOREIGN KEY (`cod_deliveryman`) REFERENCES `deliveryman` (`cod_deliveryman`);
 COMMIT;
 
